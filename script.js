@@ -3,10 +3,12 @@
     let simonSeq = [];
     let userSeq = [];
     let level = 1;
+    let strict = false;
     const {
       colors,
       display,
       startButton,
+      strictButton,
     } = spec;
 
     function lightOn(color) {
@@ -76,6 +78,11 @@
             playSequence();
           } else if (testMatch() === false) {
             updateDisplay('lose');
+            if (strict) {
+              level = 1;
+              setTimeout(updateDisplay, 1000, level);
+              simonSeq = setSimonSeq();
+            }
             userSeq = [];
             playSequence();
           }
@@ -93,6 +100,15 @@
         level = 1;
         updateDisplay(level);
         playSequence();
+      });
+
+      strictButton.addEventListener('click', () => {
+        strict = strict === false;
+        if (strict === true) {
+          console.log('strict mode on'); // Replace with an UI element
+        } else {
+          console.log('strict mode off'); // Replace with an UI element
+        }
       });
     }
 
@@ -115,11 +131,13 @@
   ];
   const display = document.querySelector('.display');
   const startButton = document.querySelector('.start');
+  const strictButton = document.querySelector('.strict');
 
   const simon = Simon({
     colors,
     display,
     startButton,
+    strictButton,
   });
   simon.init();
 }());
