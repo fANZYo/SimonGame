@@ -7,5 +7,5 @@ Work In Progress
 ## Known Bugs
 
 * Pressing the start button more than once will start a new game for each click
-* Players can start the their sequence while the game is showing it
+* Players can start their sequence while the game is showing it
 
