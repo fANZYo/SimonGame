@@ -1,0 +1,69 @@
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+body {
+	background: #333;
+}
+
+#simon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.container {
+	width: 450px;
+	height: 450px;
+	background: #050505;
+	border-radius: 50%;
+	position: relative;
+	margin: 0 auto;
+}
+
+.green, .red, .blue, .yellow {
+	width: 42%;
+	height: 42%;
+	position: absolute;
+  filter: brightness(50%);
+}
+
+.green {
+	background: #0f0;
+	border-radius: 100% 0 0 0;
+	top: 6%;
+	left: 6%;
+}
+.red {
+	background: #f00;
+	border-radius: 0 100% 0 0;
+	top: 6%;
+	left: 52%;
+}
+.blue {
+	background: #00f;
+	border-radius: 0 0 100% 0;
+	top: 52%;
+	left: 52%;
+}
+.yellow {
+	background: #ff0;
+	border-radius: 0 0 0 100%;
+	top: 52%;
+	left: 6%
+}
+.center {
+	border-radius: 50%;
+	position: absolute;
+	border: 20px solid #050505;
+	background: #888;
+	width: 50%;
+	height: 50%;
+	top: 25%;
+	left: 25%;
+}
+
+.green:active, .red:active, .blue:active, .yellow:active {
+  filter: brightness(100%);
+}
