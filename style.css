@@ -63,7 +63,3 @@ body {
 	top: 25%;
 	left: 25%;
 }
-
-.green:active, .red:active, .blue:active, .yellow:active {
-  filter: brightness(100%);
-}
