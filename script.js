@@ -1,6 +1,6 @@
 (function () {
   function Simon(spec) {
-    const simonSeq = [];
+    let simonSeq = [];
     let userSeq = [];
     let level = 1;
     const {
@@ -49,43 +49,56 @@
       }
     }
 
-    function addHandlers(colorElem) {
-      colorElem.addEventListener('mousedown', () => {
-        lightOn(colors.indexOf(colorElem));
-      });
+    function setSimonSeq() {
+      const seq = [];
 
-      colorElem.addEventListener('mouseup', (event) => {
-        userSeq.push(colors.indexOf(event.target));
-        lightOff(colors.indexOf(colorElem));
+      for (let i = 0; i < 20; i += 1) {
+        seq.push(Math.floor(Math.random() * 4));
+      }
+      return seq;
+    }
 
-        // Test userSeq after every mouseup and at the end of the sequence
-        if (userSeq.length === level && testMatch()) {
-          level += 1;
-          updateDisplay(level);
-          userSeq = [];
-          playSequence();
-        } else if (testMatch() === false) {
-          updateDisplay('lose');
-          userSeq = [];
-          playSequence();
-        }
-      });
+    function addHandlers() {
+      function colorHandlers(colorElem) {
+        colorElem.addEventListener('mousedown', () => {
+          lightOn(colors.indexOf(colorElem));
+        });
 
-      colorElem.addEventListener('mouseout', () => {
-        lightOff(colors.indexOf(colorElem));
+        colorElem.addEventListener('mouseup', (event) => {
+          userSeq.push(colors.indexOf(event.target));
+          lightOff(colors.indexOf(colorElem));
+
+          // Test userSeq after every mouseup and at the end of the sequence
+          if (userSeq.length === level && testMatch()) {
+            level += 1;
+            updateDisplay(level);
+            userSeq = [];
+            playSequence();
+          } else if (testMatch() === false) {
+            updateDisplay('lose');
+            userSeq = [];
+            playSequence();
+          }
+        });
+
+        colorElem.addEventListener('mouseout', () => {
+          lightOff(colors.indexOf(colorElem));
+        });
+      }
+
+      colors.forEach(colorHandlers);
+
+      startButton.addEventListener('click', () => {
+        simonSeq = setSimonSeq();
+        level = 1;
+        updateDisplay(level);
+        playSequence();
       });
     }
 
     function init() {
-      for (let i = 0; i < 20; i += 1) {
-        simonSeq.push(Math.floor(Math.random() * 4));
-      }
-
-      startButton.addEventListener('click', () => {
-        playSequence();
-      });
-
-      colors.forEach(addHandlers);
+      simonSeq = setSimonSeq();
+      addHandlers();
       display.textContent = level;
     }
 
