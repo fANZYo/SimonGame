@@ -60,14 +60,31 @@
       return seq;
     }
 
+    function startGame() {
+      simonSeq = setSimonSeq();
+      userSeq = [];
+      level = 1;
+      updateDisplay(level);
+      playSequence();
+    }
+
+    function strictMode() {
+      strict = strict === false;
+      if (strict === true) {
+        console.log('strict mode on'); // Replace with an UI element
+      } else {
+        console.log('strict mode off'); // Replace with an UI element
+      }
+    }
+
     function addHandlers() {
       function colorHandlers(colorElem) {
         colorElem.addEventListener('mousedown', () => {
           lightOn(colors.indexOf(colorElem));
         });
 
-        colorElem.addEventListener('mouseup', (event) => {
-          userSeq.push(colors.indexOf(event.target));
+        colorElem.addEventListener('mouseup', () => {
+          userSeq.push(colors.indexOf(colorElem));
           lightOff(colors.indexOf(colorElem));
 
           // Test userSeq after every mouseup and at the end of the sequence
@@ -78,13 +95,13 @@
             playSequence();
           } else if (testMatch() === false) {
             updateDisplay('lose');
-            if (strict) {
-              level = 1;
-              setTimeout(updateDisplay, 1000, level);
-              simonSeq = setSimonSeq();
+
+            if (strict === true) {
+              setTimeout(startGame, 1000);
+            } else {
+              userSeq = [];
+              playSequence();
             }
-            userSeq = [];
-            playSequence();
           }
         });
 
@@ -95,27 +112,13 @@
 
       colors.forEach(colorHandlers);
 
-      startButton.addEventListener('click', () => {
-        simonSeq = setSimonSeq();
-        level = 1;
-        updateDisplay(level);
-        playSequence();
-      });
+      startButton.addEventListener('click', startGame);
 
-      strictButton.addEventListener('click', () => {
-        strict = strict === false;
-        if (strict === true) {
-          console.log('strict mode on'); // Replace with an UI element
-        } else {
-          console.log('strict mode off'); // Replace with an UI element
-        }
-      });
+      strictButton.addEventListener('click', strictMode);
     }
 
     function init() {
-      simonSeq = setSimonSeq();
       addHandlers();
-      display.textContent = level;
     }
 
     return Object.freeze({

@@ -1,7 +1,7 @@
 # Simon Game
 
-Using eslint airbnb guide<br>
-Work In Progress<br>
+Using eslint airbnb guide
+
 [Live Demo](https://fanzyo.github.io/SimonGame/)
 
 ## Known Bugs
