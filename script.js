@@ -24,6 +24,7 @@
 
     function playSequence() {
       // lightOn every 1000ms and lightOff 800ms after that and for each lightOn
+      colors.forEach(colorElem => colorHandlers(colorElem, 'remove'));
       let i = 0;
       const play = setInterval(() => {
         lightOn(simonSeq[i]);
@@ -37,6 +38,7 @@
         if (i >= level || i >= 20) {
           i = 0;
           clearInterval(play);
+          colors.forEach(colorElem => colorHandlers(colorElem, 'add'));
         }
       }, 1000);
     }
@@ -77,43 +79,50 @@
       }
     }
 
-    function addHandlers() {
-      function colorHandlers(colorElem) {
-        colorElem.addEventListener('mousedown', () => {
-          lightOn(colors.indexOf(colorElem));
-        });
+    function mouseDownHandler(event) {
+      lightOn(colors.indexOf(event.target));
+    }
 
-        colorElem.addEventListener('mouseup', () => {
-          userSeq.push(colors.indexOf(colorElem));
-          lightOff(colors.indexOf(colorElem));
+    function mouseUpHandler(event) {
+      userSeq.push(colors.indexOf(event.target));
+      lightOff(colors.indexOf(event.target));
 
-          // Test userSeq after every mouseup and at the end of the sequence
-          if (userSeq.length === level && testMatch()) {
-            level += 1;
-            updateDisplay(level);
-            userSeq = [];
-            playSequence();
-          } else if (testMatch() === false) {
-            updateDisplay('lose');
+      // Test userSeq after every mouseup and at the end of the sequence
+      if (userSeq.length === level && testMatch()) {
+        level += 1;
+        updateDisplay(level);
+        userSeq = [];
+        playSequence();
+      } else if (testMatch() === false) {
+        updateDisplay('lose');
 
-            if (strict === true) {
-              setTimeout(startGame, 1000);
-            } else {
-              userSeq = [];
-              playSequence();
-            }
-          }
-        });
-
-        colorElem.addEventListener('mouseout', () => {
-          lightOff(colors.indexOf(colorElem));
-        });
+        if (strict === true) {
+          setTimeout(startGame, 1000);
+        } else {
+          userSeq = [];
+          playSequence();
+        }
       }
+    }
 
-      colors.forEach(colorHandlers);
+    function mouseOutHandler(event) {
+      lightOff(colors.indexOf(event.target));
+    }
 
+    function colorHandlers(colorElem, action) {
+      if (action === 'add') {
+        colorElem.addEventListener('mousedown', mouseDownHandler);
+        colorElem.addEventListener('mouseup', mouseUpHandler);
+        colorElem.addEventListener('mouseout', mouseOutHandler);
+      } else if (action === 'remove') {
+        colorElem.removeEventListener('mousedown', mouseDownHandler);
+        colorElem.removeEventListener('mouseup', mouseUpHandler);
+        colorElem.removeEventListener('mouseout', mouseOutHandler);
+      }
+    }
+
+    function addHandlers() {
       startButton.addEventListener('click', startGame);
-
       strictButton.addEventListener('click', strictMode);
     }
 
