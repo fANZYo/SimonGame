@@ -6,6 +6,7 @@
     let strict = false;
     const {
       colors,
+      sounds,
       display,
       startButton,
       strictButton,
@@ -24,10 +25,11 @@
 
     function playSequence() {
       // lightOn every 1000ms and lightOff 800ms after that and for each lightOn
-      colors.forEach(colorElem => colorHandlers(colorElem, 'remove'));
+      colors.forEach(colorElem => removeHandlers(colorElem));
       let i = 0;
       const play = setInterval(() => {
         lightOn(simonSeq[i]);
+        sounds[simonSeq[i]].play();
 
         setTimeout((index) => {
           lightOff(simonSeq[index]);
@@ -38,7 +40,7 @@
         if (i >= level || i >= 20) {
           i = 0;
           clearInterval(play);
-          colors.forEach(colorElem => colorHandlers(colorElem, 'add'));
+          colors.forEach(colorElem => addHandlers(colorElem));
         }
       }, 1000);
     }
@@ -86,6 +88,7 @@
     function mouseUpHandler(event) {
       userSeq.push(colors.indexOf(event.target));
       lightOff(colors.indexOf(event.target));
+      sounds[colors.indexOf(event.target)].play();
 
       // Test userSeq after every mouseup and at the end of the sequence
       if (userSeq.length === level && testMatch()) {
@@ -109,19 +112,24 @@
       lightOff(colors.indexOf(event.target));
     }
 
-    function colorHandlers(colorElem, action) {
-      if (action === 'add') {
-        colorElem.addEventListener('mousedown', mouseDownHandler);
-        colorElem.addEventListener('mouseup', mouseUpHandler);
-        colorElem.addEventListener('mouseout', mouseOutHandler);
-      } else if (action === 'remove') {
+    function removeHandlers() {
+      function colorHandlers(colorElem) {
         colorElem.removeEventListener('mousedown', mouseDownHandler);
         colorElem.removeEventListener('mouseup', mouseUpHandler);
         colorElem.removeEventListener('mouseout', mouseOutHandler);
       }
+
+      colors.forEach(colorElem => colorHandlers(colorElem));
     }
 
     function addHandlers() {
+      function colorHandlers(colorElem) {
+        colorElem.addEventListener('mousedown', mouseDownHandler);
+        colorElem.addEventListener('mouseup', mouseUpHandler);
+        colorElem.addEventListener('mouseout', mouseOutHandler);
+      }
+
+      colors.forEach(colorElem => colorHandlers(colorElem));
       startButton.addEventListener('click', startGame);
       strictButton.addEventListener('click', strictMode);
     }
@@ -145,11 +153,24 @@
   const startButton = document.querySelector('.start');
   const strictButton = document.querySelector('.strict');
 
+  const sounds = [
+    document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio'),
+    document.createElement('audio'),
+  ];
+
+  sounds[0].src = 'https://s3.amazonaws.com/freecodecamp/simonSound1.mp3';
+  sounds[1].src = 'https://s3.amazonaws.com/freecodecamp/simonSound2.mp3';
+  sounds[2].src = 'https://s3.amazonaws.com/freecodecamp/simonSound3.mp3';
+  sounds[3].src = 'https://s3.amazonaws.com/freecodecamp/simonSound4.mp3';
+
   const simon = Simon({
     colors,
     display,
     startButton,
     strictButton,
+    sounds,
   });
   simon.init();
 }());
