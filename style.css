@@ -30,6 +30,7 @@ body {
   position: absolute;
   filter: brightness(50%);
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .green {
