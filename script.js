@@ -83,14 +83,14 @@
 
     function mouseDownHandler(event) {
       if (event.type === 'touchstart') {
-        event.stopPropagation();
+        console.log(event.type);
       }
       lightOn(colors.indexOf(event.target));
     }
 
     function mouseUpHandler(event) {
-      if (event.type === 'touchend') {
-        event.stopPropagation();
+      if (event.type === 'mouseup') {
+        console.log(event.type);
       }
       userSeq.push(colors.indexOf(event.target));
       lightOff(colors.indexOf(event.target));
