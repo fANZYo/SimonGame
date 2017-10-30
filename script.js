@@ -82,10 +82,16 @@
     }
 
     function mouseDownHandler(event) {
+      if (event.type === 'touchstart') {
+        event.stopPropagation();
+      }
       lightOn(colors.indexOf(event.target));
     }
 
     function mouseUpHandler(event) {
+      if (event.type === 'touchend') {
+        event.stopPropagation();
+      }
       userSeq.push(colors.indexOf(event.target));
       lightOff(colors.indexOf(event.target));
       sounds[colors.indexOf(event.target)].play();
