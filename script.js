@@ -154,16 +154,11 @@
   const strictButton = document.querySelector('.strict');
 
   const sounds = [
-    document.createElement('audio'),
-    document.createElement('audio'),
-    document.createElement('audio'),
-    document.createElement('audio'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
+    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),
   ];
-
-  sounds[0].src = 'https://s3.amazonaws.com/freecodecamp/simonSound1.mp3';
-  sounds[1].src = 'https://s3.amazonaws.com/freecodecamp/simonSound2.mp3';
-  sounds[2].src = 'https://s3.amazonaws.com/freecodecamp/simonSound3.mp3';
-  sounds[3].src = 'https://s3.amazonaws.com/freecodecamp/simonSound4.mp3';
 
   const simon = Simon({
     colors,
