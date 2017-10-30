@@ -131,6 +131,20 @@ body {
   .container {
     width: 300px;
     height: 300px;
+    border-radius: 5px;
+  }
+
+  .green {
+    border-radius: 5px 0 0 0;
+  }
+  .red {
+    border-radius: 0 5px 0 0;
+  }
+  .blue {
+    border-radius: 0 0 5px 0;
+  }
+  .yellow {
+    border-radius: 0 0 0 5px;
   }
 
   .center h1 {

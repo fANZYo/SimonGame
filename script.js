@@ -115,7 +115,9 @@
     function removeHandlers() {
       function colorHandlers(colorElem) {
         colorElem.removeEventListener('mousedown', mouseDownHandler);
+        colorElem.removeEventListener('touchstart', mouseDownHandler);
         colorElem.removeEventListener('mouseup', mouseUpHandler);
+        colorElem.removeEventListener('touchend', mouseUpHandler);
         colorElem.removeEventListener('mouseout', mouseOutHandler);
       }
 
@@ -125,7 +127,9 @@
     function addHandlers() {
       function colorHandlers(colorElem) {
         colorElem.addEventListener('mousedown', mouseDownHandler);
+        colorElem.addEventListener('touchstart', mouseDownHandler);
         colorElem.addEventListener('mouseup', mouseUpHandler);
+        colorElem.addEventListener('touchend', mouseUpHandler);
         colorElem.addEventListener('mouseout', mouseOutHandler);
       }
 
