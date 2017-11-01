@@ -128,6 +128,8 @@
       }
 
       colors.forEach(colorElem => colorHandlers(colorElem));
+      startButton.removeEventListener('click', startGame);
+      strictButton.removeEventListener('click', strictMode);
     }
 
     function addHandlers() {
@@ -150,6 +152,7 @@
 
     return Object.freeze({
       init,
+      removeHandlers,
     });
   }
 
@@ -162,6 +165,7 @@
   const display = document.querySelector('.display');
   const startButton = document.querySelector('.start');
   const strictButton = document.querySelector('.strict');
+  const switchButton = document.querySelector('.switch');
 
   const sounds = [
     new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
@@ -177,5 +181,31 @@
     strictButton,
     sounds,
   });
-  simon.init();
+
+  let gameOn = false;
+
+  function switchOnOff() {
+    if (switchButton.style.left === '0px') {
+      switchButton.style.right = '0px';
+      switchButton.style.left = 'auto';
+      switchButton.style.boxShadow = '-1px 0 2px rgba(0, 0, 0, .75)';
+    } else {
+      switchButton.style.left = '0px';
+      switchButton.style.right = 'auto';
+      switchButton.style.boxShadow = '1px 0 2px rgba(0, 0, 0, .75)';
+    }
+
+    if (gameOn === false) {
+      display.style.color = '#c00';
+      gameOn = true;
+      simon.init();
+    } else {
+      display.style.color = '#600';
+      gameOn = false;
+      display.textContent = '--';
+      simon.removeHandlers();
+    }
+  }
+
+  switchButton.parentNode.addEventListener('click', switchOnOff);
 }());
