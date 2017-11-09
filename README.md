@@ -12,9 +12,3 @@ If I was to redo this project, I would improve how the code is laid out and use 
 
 [Live Demo](https://fanzyo.github.io/SimonGame/)
 
-### Known Issues
-
-* Pressing the start button more than once will start a new game and not stop playing the sequence
-* Players can start their sequence while the game is showing it *fixed*
-* Layout breaks on small screen
-
