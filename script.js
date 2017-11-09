@@ -1,3 +1,18 @@
+/*
+ * SimonCore {
+ *    simonSeq, private
+ *    testMatch,
+ *    setSimonSeq,
+ *    iterator(level) // return an iterator over simonSeq from 0 to level
+ *        next,
+ *        current,
+ *        rewind
+ *    init?
+ * }
+ * playSeq(SimonCore, lightOn, lightOff, level) loop through simonSeq via iterator (see Array
+ *    iterator mdn) calling lighOn and lightOff on an interval
+ * lightOn(), lightOff() set and remove a css class
+ */
 (function () {
   function Simon(spec) {
     let simonSeq = [];
